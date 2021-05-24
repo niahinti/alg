@@ -37,24 +37,14 @@ public class Obligatorio implements IObligatorio {
         aerolineas.agregarFinal(new TDato<>(IB));
 
         //precarga ciudades Ciudad(int numero, String nombre)
-        //esta parte va a pasar por registrarCiudad antes
-        Ciudad MVD = new Ciudad(1, "MVD");
-        Ciudad MIA = new Ciudad(1, "MIA");//miami non stop
-        Ciudad NYC = new Ciudad(1, "NYC");//new york 1 stop
-        Ciudad SCL = new Ciudad(1, "SCL");//santiago non stop
-        Ciudad UIO = new Ciudad(1, "UIO");//quito 1 stop
-        Ciudad MAD = new Ciudad(1, "MAD");//madrid non stop
-        Ciudad FCO = new Ciudad(1, "FCO");//roma 1 stop
-        Ciudad FLR = new Ciudad(1, "FLR");//florencia 2 stops, no debe aparecer en 2.16
-
-        ciudades.agregarFinal(new TDato<>(MVD));
-        ciudades.agregarFinal(new TDato<>(MIA));
-        ciudades.agregarFinal(new TDato<>(NYC));
-        ciudades.agregarFinal(new TDato<>(SCL));
-        ciudades.agregarFinal(new TDato<>(UIO));
-        ciudades.agregarFinal(new TDato<>(MAD));
-        ciudades.agregarFinal(new TDato<>(FCO));
-        ciudades.agregarFinal(new TDato<>(FLR));
+        registrarCiudad(1, "MVD");
+        registrarCiudad(1, "MIA");//miami non stop
+        registrarCiudad(1, "NYC");//new york 1 stop
+        registrarCiudad(1, "SCL");//santiago non stop
+        registrarCiudad(1, "UIO");//quito 1 stop
+        registrarCiudad(1, "MAD");//madrid non stop
+        registrarCiudad(1, "FCO");//roma 1 stop
+        registrarCiudad(1, "FLR");//florencia 2 stops, no debe aparecer en 2.16
 
         return ret;
     }
@@ -70,22 +60,15 @@ public class Obligatorio implements IObligatorio {
 
     @Override
     public Retorno registrarCiudad(int NroCiudad, String Ciudad) {
-
-        //Retorno ret = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
         Retorno ret = new Retorno(Retorno.Resultado.ERROR);
-
         Ciudad nuevaCiudad = new Ciudad(NroCiudad, Ciudad);
         TDato n = new TDato(nuevaCiudad);
-        // recorrer lista ciudades
-        //ciudades.mostrarDato(n);
-        // si encuentra ciudad retornar error y valorString con error
+        // recorre lista ciudades
         if (!ciudades.existe(n)) {
             ciudades.agregarFinal(n);
             ret.resultado = OK;
-            return ret;
         }
         return ret;
-
     }
 
     @Override
