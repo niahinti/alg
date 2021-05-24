@@ -311,4 +311,22 @@ public class ListaOrd implements ILista {
     public void setActual(int actual) {
         this.actual = actual;
     }
+
+    @Override
+    public boolean existe(TDato n) {
+        return mostrarDato(n) != null;
+    }
+
+    @Override
+    public TDato mostrarDato(TDato n) {
+        NodoLista aux = inicio;
+        while (aux != null) {
+            if (aux.getDato().equals(n)) {
+                return aux.getDato();
+            } else {
+                aux = aux.getSig();
+            }
+        }
+        return null;
+    }
 }

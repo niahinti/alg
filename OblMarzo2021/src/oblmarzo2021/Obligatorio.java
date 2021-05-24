@@ -5,6 +5,7 @@ import Listas.*;
 //import Listas.Lista;
 //import Listas.TDato;
 import java.util.Calendar;
+import static oblmarzo2021.Retorno.Resultado.OK;
 //import Dominio.Aerolinea;
 //import Dominio.Ciudad;
 
@@ -60,16 +61,33 @@ public class Obligatorio implements IObligatorio {
 
     @Override
     public Retorno destruirSistemaReservas() {
-        Retorno ret = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno ret = new Retorno(Retorno.Resultado.OK);
+        this.aerolineas = null;
+        this.ciudades = null;
 
         return ret;
     }
 
     @Override
     public Retorno registrarCiudad(int NroCiudad, String Ciudad) {
-        Retorno ret = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
+        //Retorno ret = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno ret = new Retorno(Retorno.Resultado.ERROR);
+        ret.valorString = "ciudad ya existe";
+
+        Ciudad nuevaCiudad = new Ciudad(NroCiudad, Ciudad);
+        TDato<Ciudad> n = new TDato<>(nuevaCiudad);
+        // recorrer lista ciudades
+        ciudades.mostrarDato(n);
+        // si encuentra ciudad retornar error y valorString con error
+        if (!ciudades.existe(n)) {
+
+            ciudades.agregarFinal(n);
+            ret.resultado = OK;
+            ret.valorString = "Ciudad " + Ciudad + " agregada con exito";
+        }
         return ret;
+
     }
 
     @Override

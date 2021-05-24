@@ -25,4 +25,10 @@ public interface ILista {
 
     //POS: Elimina todos los nodos de la lista
     void vaciar();
+
+    //POS: checkea si nodo existe en lista
+    boolean existe(TDato n);
+
+    //POS: Muestra un dato de la lista
+    TDato mostrarDato(TDato n);
 }

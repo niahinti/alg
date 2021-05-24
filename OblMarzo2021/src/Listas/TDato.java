@@ -26,6 +26,7 @@ public class TDato<T> {
      * @return el Objeto encapsulado [Hay que castearlo]
      */
     public Object getO() {
+    public Object getDato() {
         return o;
     }
 
@@ -33,6 +34,7 @@ public class TDato<T> {
      * @param o Seteamos el dato a guardar encapsulado [No se castea]
      */
     public void setO(T o) {
+    public void setDato(T o) {
         this.o = o;
     }
 
