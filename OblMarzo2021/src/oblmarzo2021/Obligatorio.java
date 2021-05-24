@@ -73,18 +73,16 @@ public class Obligatorio implements IObligatorio {
 
         //Retorno ret = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
         Retorno ret = new Retorno(Retorno.Resultado.ERROR);
-        ret.valorString = "ciudad ya existe";
 
         Ciudad nuevaCiudad = new Ciudad(NroCiudad, Ciudad);
-        TDato<Ciudad> n = new TDato<>(nuevaCiudad);
+        TDato n = new TDato(nuevaCiudad);
         // recorrer lista ciudades
-        ciudades.mostrarDato(n);
+        //ciudades.mostrarDato(n);
         // si encuentra ciudad retornar error y valorString con error
         if (!ciudades.existe(n)) {
-
             ciudades.agregarFinal(n);
             ret.resultado = OK;
-            ret.valorString = "Ciudad " + Ciudad + " agregada con exito";
+            return ret;
         }
         return ret;
 

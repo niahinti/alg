@@ -153,19 +153,16 @@ public class Lista implements ILista {
             this.actual++;
             //lista vacía o primer elemento es mayor o igual => agrego al ppio
             if (this.esVacia() || this.inicio.getDato().CompareTo(n.getO()) == 1) {
-            if (this.esVacia() || this.inicio.getDato().CompareTo(n.getDato()) == 1) {
                 this.agregarInicio(n);
                 return true;
             }
             //último elemento es menor o igual => agrego al final
             if (this.fin.getDato().CompareTo(n.getO()) == -1) {
-            if (this.fin.getDato().CompareTo(n.getDato()) == -1) {
                 this.agregarFinal(n);
                 return true;
             }
             NodoLista aux = this.inicio;
             while (aux.getSig() != null && aux.getSig().getDato().CompareTo(n.getO()) == 1) {
-            while (aux.getSig() != null && aux.getSig().getDato().CompareTo(n.getDato()) == 1) {
                 aux = aux.getSig();
             }
             NodoLista nuevo = new NodoLista(n);
@@ -323,7 +320,11 @@ public class Lista implements ILista {
     public TDato mostrarDato(TDato n) {
         NodoLista aux = inicio;
         while (aux != null) {
-            if (aux.getDato().equals(n)) {
+//            System.out.println(aux.getDato());
+//            System.out.println("------------");
+//            System.out.println(n);
+
+            if (aux.getDato().getO().equals(n.getO())) {
                 return aux.getDato();
             } else {
                 aux = aux.getSig();

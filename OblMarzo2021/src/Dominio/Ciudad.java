@@ -9,7 +9,7 @@ package Dominio;
  *
  * @author Camila
  */
-public class Ciudad {
+public class Ciudad implements Comparable<Ciudad> {
 
     int numero;
     String nombre;
@@ -37,4 +37,18 @@ public class Ciudad {
         this.nombre = nombre;
     }
 
+    @Override
+    public int compareTo(Ciudad c) {
+        return this.getNombre().compareTo(c.getNombre()); // -> Por String ascendente
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Ciudad)) {
+            return false;
+        } else {
+            Ciudad c = (Ciudad) obj;
+            return c.getNombre().equals(this.getNombre());
+        }
+    }
 }
