@@ -4,6 +4,7 @@ import java.util.Calendar;
 //import Dominio.Aerolinea;
 //import Dominio.Ciudad;
 
+//clase sistema
 public class Obligatorio implements IObligatorio {
 
     //int ciudades[] = {1, 2, 3, 4};
