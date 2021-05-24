@@ -1,6 +1,7 @@
 package Listas;
 
-public class Lista implements ILista {
+//import java.util.Iterator;
+public class ListaOrd implements ILista {
 
     private NodoLista inicio;
     private NodoLista fin;
@@ -44,7 +45,7 @@ public class Lista implements ILista {
         return this.inicio == null;
     }
 
-    //PRE: 
+    //PRE:
     //POS: Agrega un nuevo Nodo al principio de la lista
     @Override
     public boolean agregarInicio(TDato n) {
@@ -198,7 +199,7 @@ public class Lista implements ILista {
         return false;
     }
 
-    //PRE: 
+    //PRE:
     //POS: Retorna la cantidad de nodos que tiene la lista
     public int cantElementos() {
         int cont = 0;
