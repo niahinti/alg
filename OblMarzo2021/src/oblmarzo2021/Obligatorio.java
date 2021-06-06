@@ -1,5 +1,5 @@
 package oblmarzo2021;
-
+import Listas.NodoVuelo;
 import Dominio.*;
 import Listas.*;
 //import Listas.Lista;
@@ -15,6 +15,7 @@ public class Obligatorio implements IObligatorio {
     //int ciudades[] = {1, 2, 3, 4};
     Lista aerolineas;
     Lista ciudades;
+    ListaVuelo lv;
 
     @Override
     //Crea la estructura necesaria para representar el sistema de reservas.
@@ -26,6 +27,7 @@ public class Obligatorio implements IObligatorio {
         //inicio listas
         this.aerolineas = new Lista();
         this.ciudades = new Lista();
+        this.lv = new ListaVuelo();
 
         //precarga aerolineas Aerolinea(String codigo)
         Aerolinea AA = new Aerolinea("AA");
@@ -54,6 +56,7 @@ public class Obligatorio implements IObligatorio {
         Retorno ret = new Retorno(Retorno.Resultado.OK);
         this.aerolineas = null;
         this.ciudades = null;
+        this.lv = null;
 
         return ret;
     }
@@ -80,7 +83,23 @@ public class Obligatorio implements IObligatorio {
 
     @Override
     public Retorno registrarVuelo(int numero, String aerolinea, String ciudadOrigen, String ciudadDestino, int estrellas, int capacidad, Calendar fechaHoraSalida, int duracion) {
-        Retorno ret = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno ret = new Retorno(Retorno.Resultado.ERROR);
+        NodoVuelo vuelo = new NodoVuelo(numero,aerolinea,ciudadOrigen,ciudadDestino,estrellas,capacidad,fechaHoraSalida,duracion);
+        if (estrellas < 1 || estrellas > 5) {
+            return ret;
+        }
+        if (capacidad < 0 || duracion < 0) {
+            return ret;
+        }
+//        if (!ciudades.existe(ciudadOrigen)) {
+//          TODO
+//        }
+
+
+
+        lv.agregarFinal(vuelo);
+        ret.resultado = OK;
+
 
         return ret;
     }

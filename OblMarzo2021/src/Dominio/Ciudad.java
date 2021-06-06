@@ -37,6 +37,10 @@ public class Ciudad implements Comparable<Ciudad> {
         this.nombre = nombre;
     }
 
+    public void buscarCiudad(String nombre) {
+        //TODO
+    }
+
     @Override
     public int compareTo(Ciudad c) {
         return this.getNombre().compareTo(c.getNombre()); // -> Por String ascendente
