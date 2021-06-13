@@ -52,7 +52,7 @@ public class ListaOrd implements ILista {
         if (puedoInsertar()) {
             this.actual++;
             NodoLista nuevo = new NodoLista(n);
-            nuevo.setSig(inicio);
+            nuevo.getSiguiente(inicio);
             this.inicio = nuevo;
             if (this.fin == null)//estoy insertando el primer nodo
             {
@@ -74,11 +74,11 @@ public class ListaOrd implements ILista {
                 this.agregarInicio(n);
             } else {
                 NodoLista aux = this.inicio;
-                while (aux.getSig() != null) {
-                    aux = aux.getSig();
+                while (aux.getSiguiente() != null) {
+                    aux = aux.getSiguiente();
                 }
                 NodoLista nuevo = new NodoLista(n);
-                aux.setSig(nuevo);
+                aux.getSiguiente(nuevo);
                 this.fin = nuevo;
                 return true;
             }
@@ -92,7 +92,7 @@ public class ListaOrd implements ILista {
     public boolean borrarInicio() {
         this.actual--;
         if (!this.esVacia()) {
-            this.inicio = this.inicio.getSig();
+            this.inicio = this.inicio.getSiguiente();
         }
         return true;
     }
@@ -100,18 +100,18 @@ public class ListaOrd implements ILista {
     //PRE:
     //POS: Borra el último nodo
     @Override
-    public boolean borrarFin() {
+    public boolean borrarUltimo() {
         this.actual--;
         if (!this.esVacia()) {
             if (this.inicio == this.fin) {
                 this.borrarInicio();
             } else {
                 NodoLista aux = this.inicio;
-                while (aux.getSig().getSig() != null) {
-                    aux = aux.getSig();
+                while (aux.getSiguiente().getSiguiente() != null) {
+                    aux = aux.getSiguiente();
                 }
                 this.fin = aux;
-                this.fin.setSig(null);
+                this.fin.getSiguiente(null);
             }
         }
         return true;
@@ -139,7 +139,7 @@ public class ListaOrd implements ILista {
             NodoLista aux = this.inicio;
             while (aux != null) {
                 System.out.println(aux.getDato());
-                aux = aux.getSig();
+                aux = aux.getSiguiente();
             }
         }
     }
@@ -163,12 +163,12 @@ public class ListaOrd implements ILista {
                 return true;
             }
             NodoLista aux = this.inicio;
-            while (aux.getSig() != null && aux.getSig().getDato().CompareTo(n.getO()) == 1) {
-                aux = aux.getSig();
+            while (aux.getSiguiente() != null && aux.getSiguiente().getDato().CompareTo(n.getO()) == 1) {
+                aux = aux.getSiguiente();
             }
             NodoLista nuevo = new NodoLista(n);
-            nuevo.setSig(aux.getSig());
-            aux.setSig(nuevo);
+            nuevo.getSiguiente(aux.getSiguiente());
+            aux.getSiguiente(nuevo);
             return true;
         }
         return false;
@@ -185,14 +185,14 @@ public class ListaOrd implements ILista {
             this.borrarInicio();
         } else {
             NodoLista aux = this.inicio;
-            while (aux.getSig() != null && aux.getSig().getDato() != n) {
-                aux = aux.getSig();
+            while (aux.getSiguiente() != null && aux.getSiguiente().getDato() != n) {
+                aux = aux.getSiguiente();
             }
             //lo encontré o llegué al final de la lista
-            if (aux.getSig() != null) {
-                NodoLista borrar = aux.getSig();
-                aux.setSig(borrar.getSig());
-                borrar.setSig(null);
+            if (aux.getSiguiente() != null) {
+                NodoLista borrar = aux.getSiguiente();
+                aux.getSiguiente(borrar.getSiguiente());
+                borrar.getSiguiente(null);
                 return true;
             }
         }
@@ -206,7 +206,7 @@ public class ListaOrd implements ILista {
         if (!this.esVacia()) {
             NodoLista aux = this.inicio;
             while (aux != null) {
-                aux = aux.getSig();
+                aux = aux.getSiguiente();
                 cont++;
             }
         }
@@ -217,7 +217,7 @@ public class ListaOrd implements ILista {
     public NodoLista obtenerElemento(Object n) {
         NodoLista aux = this.inicio;
         while (aux != null && aux.getDato() != n) {
-            aux = aux.getSig();
+            aux = aux.getSiguiente();
         }
         //encontré dato o llegué al final
         return aux;
@@ -231,7 +231,7 @@ public class ListaOrd implements ILista {
     public void mostrarREC(NodoLista l) {
         if (l != null) {
             System.out.println(l.getDato());
-            mostrarREC(l.getSig());
+            mostrarREC(l.getSiguiente());
         }
     }
 
@@ -239,7 +239,7 @@ public class ListaOrd implements ILista {
     //POS: muestra los datos de la lista en orden inverso
     public void mostrarInversoREC(NodoLista l) {
         if (l != null) {
-            mostrarInversoREC(l.getSig());
+            mostrarInversoREC(l.getSiguiente());
             System.out.println(l.getDato());
         }
     }
@@ -251,7 +251,7 @@ public class ListaOrd implements ILista {
             if (l.getDato().CompareTo(n) == 0) {
                 return true;
             } else {
-                return existeDatoREC(l.getSig(), n);
+                return existeDatoREC(l.getSiguiente(), n);
             }
         } else {
             return false;
@@ -267,7 +267,7 @@ public class ListaOrd implements ILista {
         }
         NodoLista ptr = this.inicio;
         while (contador < i) {
-            ptr = ptr.getSig();
+            ptr = ptr.getSiguiente();
             contador++;
         }
         return ptr.getDato();
@@ -324,9 +324,44 @@ public class ListaOrd implements ILista {
             if (aux.getDato().equals(n)) {
                 return aux.getDato();
             } else {
-                aux = aux.getSig();
+                aux = aux.getSiguiente();
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean buscarelemento(TDato n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void agregarOrdenado(NodoVuelo nuevoVuelo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mostrardelultimoalprimero() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mostrardelprimeroalultimo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mostrarRec() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public NodoLista obtenerElemento(TDato n) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void eliminarelemento(TDato dato) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

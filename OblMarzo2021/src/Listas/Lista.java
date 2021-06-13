@@ -2,36 +2,36 @@ package Listas;
 
 public class Lista implements ILista {
 
-    private NodoLista inicio;
-    private NodoLista fin;
+    private NodoLista primero;
+    private NodoLista ultimo;
     private int limite;
-    private int actual;
+    private int cantidad;
 
     //Constructor
     @Override
     public void Lista() {
-        this.inicio = null;
-        this.fin = null;
-        this.actual = 0;
+        this.primero = null;
+        this.ultimo = null;
+        this.cantidad = 0;
         this.limite = 0;
     }
 
     //Inicio
-    public void setInicio(NodoLista i) {
-        inicio = i;
+    public void setPrimero(NodoLista i) {
+        primero = i;
     }
 
-    public NodoLista getInicio() {
-        return inicio;
+    public NodoLista getPrimero() {
+        return primero;
     }
 
     //Fin
-    public void setFin(NodoLista f) {
-        fin = f;
+    public void setUltimo(NodoLista f) {
+        ultimo = f;
     }
 
-    public NodoLista getFin() {
-        return fin;
+    public NodoLista getUltimo() {
+        return ultimo;
     }
 
     /**
@@ -41,7 +41,7 @@ public class Lista implements ILista {
     //POS: Retorna true si la lista no tiene nodos
     @Override
     public boolean esVacia() {
-        return this.inicio == null;
+        return this.primero == null;
     }
 
     //PRE: 
@@ -49,13 +49,13 @@ public class Lista implements ILista {
     @Override
     public boolean agregarInicio(TDato n) {
         if (puedoInsertar()) {
-            this.actual++;
+            this.cantidad++;
             NodoLista nuevo = new NodoLista(n);
-            nuevo.setSig(inicio);
-            this.inicio = nuevo;
-            if (this.fin == null)//estoy insertando el primer nodo
+            nuevo.getSiguiente(primero);
+            this.primero = nuevo;
+            if (this.ultimo == null)//estoy insertando el primer nodo
             {
-                this.fin = nuevo;
+                this.ultimo = nuevo;
             }
             return true;
         }
@@ -67,18 +67,18 @@ public class Lista implements ILista {
     @Override
     public boolean agregarFinal(TDato n) {
         if (puedoInsertar()) {
-            this.actual++;
+            this.cantidad++;
             //NodoLista nuevo= new NodoLista(n);
             if (this.esVacia()) {
                 this.agregarInicio(n);
             } else {
-                NodoLista aux = this.inicio;
-                while (aux.getSig() != null) {
-                    aux = aux.getSig();
+                NodoLista aux = this.primero;
+                while (aux.getSiguiente() != null) {
+                    aux = aux.getSiguiente();
                 }
                 NodoLista nuevo = new NodoLista(n);
-                aux.setSig(nuevo);
-                this.fin = nuevo;
+                aux.getSiguiente(nuevo);
+                this.ultimo = nuevo;
                 return true;
             }
         }
@@ -89,9 +89,9 @@ public class Lista implements ILista {
     //POS: Borra el primer nodo
     @Override
     public boolean borrarInicio() {
-        this.actual--;
+        this.cantidad--;
         if (!this.esVacia()) {
-            this.inicio = this.inicio.getSig();
+            this.primero = this.primero.getSiguiente();
         }
         return true;
     }
@@ -99,18 +99,18 @@ public class Lista implements ILista {
     //PRE:
     //POS: Borra el último nodo
     @Override
-    public boolean borrarFin() {
-        this.actual--;
+    public boolean borrarUltimo() {
+        this.cantidad--;
         if (!this.esVacia()) {
-            if (this.inicio == this.fin) {
+            if (this.primero == this.ultimo) {
                 this.borrarInicio();
             } else {
-                NodoLista aux = this.inicio;
-                while (aux.getSig().getSig() != null) {
-                    aux = aux.getSig();
+                NodoLista aux = this.primero;
+                while (aux.getSiguiente().getSiguiente() != null) {
+                    aux = aux.getSiguiente();
                 }
-                this.fin = aux;
-                this.fin.setSig(null);
+                this.ultimo = aux;
+                this.ultimo.getSiguiente(null);
             }
         }
         return true;
@@ -120,10 +120,10 @@ public class Lista implements ILista {
     //POS: elimina todos los nodos de una lista dada
     @Override
     public void vaciar() {
-        this.actual = 0;
-        //en java alcanza con apuntar inicio y fin a null
-        //inicio=fin=null;
-        while (inicio != null) {
+        this.cantidad = 0;
+        //en java alcanza con apuntar primero y ultimo a null
+        //inicio=ultimo=null;
+        while (primero != null) {
             borrarInicio();
         }
     }
@@ -135,10 +135,10 @@ public class Lista implements ILista {
         if (this.esVacia()) {
             System.out.println("Lista es vacía");
         } else {
-            NodoLista aux = this.inicio;
+            NodoLista aux = this.primero;
             while (aux != null) {
                 System.out.println(aux.getDato());
-                aux = aux.getSig();
+                aux = aux.getSiguiente();
             }
         }
     }
@@ -150,24 +150,24 @@ public class Lista implements ILista {
     //POS: inserta nuevo elemento en orden ascendente
     public boolean agregarOrd(TDato n) {
         if (puedoInsertar()) {
-            this.actual++;
+            this.cantidad++;
             //lista vacía o primer elemento es mayor o igual => agrego al ppio
-            if (this.esVacia() || this.inicio.getDato().CompareTo(n.getO()) == 1) {
+            if (this.esVacia() || this.primero.getDato().CompareTo(n.getO()) == 1) {
                 this.agregarInicio(n);
                 return true;
             }
             //último elemento es menor o igual => agrego al final
-            if (this.fin.getDato().CompareTo(n.getO()) == -1) {
+            if (this.ultimo.getDato().CompareTo(n.getO()) == -1) {
                 this.agregarFinal(n);
                 return true;
             }
-            NodoLista aux = this.inicio;
-            while (aux.getSig() != null && aux.getSig().getDato().CompareTo(n.getO()) == 1) {
-                aux = aux.getSig();
+            NodoLista aux = this.primero;
+            while (aux.getSiguiente() != null && aux.getSiguiente().getDato().CompareTo(n.getO()) == 1) {
+                aux = aux.getSiguiente();
             }
             NodoLista nuevo = new NodoLista(n);
-            nuevo.setSig(aux.getSig());
-            aux.setSig(nuevo);
+            nuevo.getSiguiente(aux.getSiguiente());
+            aux.getSiguiente(nuevo);
             return true;
         }
         return false;
@@ -176,22 +176,22 @@ public class Lista implements ILista {
     //PRE: lista ordenada
     //POS: Borra la primer ocurrencia de un elemento dado
     public boolean borrarElemento(Object n) {
-        this.actual--;
+        this.cantidad--;
         if (this.esVacia()) {
             return true;
         }
-        if (this.inicio.getDato() == n) {
+        if (this.primero.getDato() == n) {
             this.borrarInicio();
         } else {
-            NodoLista aux = this.inicio;
-            while (aux.getSig() != null && aux.getSig().getDato() != n) {
-                aux = aux.getSig();
+            NodoLista aux = this.primero;
+            while (aux.getSiguiente() != null && aux.getSiguiente().getDato() != n) {
+                aux = aux.getSiguiente();
             }
             //lo encontré o llegué al final de la lista
-            if (aux.getSig() != null) {
-                NodoLista borrar = aux.getSig();
-                aux.setSig(borrar.getSig());
-                borrar.setSig(null);
+            if (aux.getSiguiente() != null) {
+                NodoLista borrar = aux.getSiguiente();
+                aux.getSiguiente(borrar.getSiguiente());
+                borrar.getSiguiente(null);
                 return true;
             }
         }
@@ -203,34 +203,24 @@ public class Lista implements ILista {
     public int cantElementos() {
         int cont = 0;
         if (!this.esVacia()) {
-            NodoLista aux = this.inicio;
+            NodoLista aux = this.primero;
             while (aux != null) {
-                aux = aux.getSig();
+                aux = aux.getSiguiente();
                 cont++;
             }
         }
         return cont;
     }
 
-    //PRE: //POS:
-    public NodoLista obtenerElemento(Object n) {
-        NodoLista aux = this.inicio;
-        while (aux != null && aux.getDato() != n) {
-            aux = aux.getSig();
-        }
-        //encontré dato o llegué al final
-        return aux;
-    }
-
     /**
-     * *** Métodos RECURSIVOS ****
+     * *** Metodos RECURSIVOS ****
      */
     //PRE:
     //POS: muestra los datos de la lista en orden de enlace
     public void mostrarREC(NodoLista l) {
         if (l != null) {
             System.out.println(l.getDato());
-            mostrarREC(l.getSig());
+            mostrarREC(l.getSiguiente());
         }
     }
 
@@ -238,7 +228,7 @@ public class Lista implements ILista {
     //POS: muestra los datos de la lista en orden inverso
     public void mostrarInversoREC(NodoLista l) {
         if (l != null) {
-            mostrarInversoREC(l.getSig());
+            mostrarInversoREC(l.getSiguiente());
             System.out.println(l.getDato());
         }
     }
@@ -250,7 +240,7 @@ public class Lista implements ILista {
             if (l.getDato().CompareTo(n) == 0) {
                 return true;
             } else {
-                return existeDatoREC(l.getSig(), n);
+                return existeDatoREC(l.getSiguiente(), n);
             }
         } else {
             return false;
@@ -262,25 +252,25 @@ public class Lista implements ILista {
     public TDato datoEnPos(int i) {
         int contador = 0;
         if (i == 0) {
-            return this.inicio.getDato();
+            return this.primero.getDato();
         }
-        NodoLista ptr = this.inicio;
+        NodoLista ptr = this.primero;
         while (contador < i) {
-            ptr = ptr.getSig();
+            ptr = ptr.getSiguiente();
             contador++;
         }
         return ptr.getDato();
     }
 
     /**
-     * Si actual < a limite, inserto //PRE: -- //POS: True si actualmente no
+     * Si cantidad < a limite, inserto //PRE: -- //POS: True si actualmente no
      * paso el limite de la lista. @return T/F
      */
     public boolean puedoInsertar() {
         if (this.limite == 0) {
             return true;
         }
-        return this.limite > this.actual;
+        return this.limite > this.cantidad;
     }
 
     /**
@@ -298,17 +288,17 @@ public class Lista implements ILista {
     }
 
     /**
-     * @return the actual
+     * @return the cantidad
      */
-    public int getActual() {
-        return actual;
+    public int getCantidad() {
+        return cantidad;
     }
 
     /**
-     * @param actual the actual to set
+     * @param cantidad the cantidad to set
      */
-    public void setActual(int actual) {
-        this.actual = actual;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     @Override
@@ -318,7 +308,7 @@ public class Lista implements ILista {
 
     @Override
     public TDato mostrarDato(TDato n) {
-        NodoLista aux = inicio;
+        NodoLista aux = primero;
         while (aux != null) {
 //            System.out.println(aux.getDato());
 //            System.out.println("------------");
@@ -327,10 +317,77 @@ public class Lista implements ILista {
             if (aux.getDato().getO().equals(n.getO())) {
                 return aux.getDato();
             } else {
-                aux = aux.getSig();
+                aux = aux.getSiguiente();
             }
         }
         return null;
-
     }
+
+    @Override
+    //PRE: //POS:
+    public NodoLista obtenerElemento(TDato n) {
+        NodoLista aux = this.primero;
+        while (aux != null && aux.getDato() != n) {
+            aux = aux.getSiguiente();
+        }
+        //encontré dato o llegué al final
+        return aux;
+    }
+
+    @Override
+    public boolean buscarelemento(TDato n) {
+        NodoLista aux = this.getPrimero();
+        if (this.primero.getDato() == n || this.ultimo.getDato() == n) {
+            return true;
+        }
+        while (aux != null && aux.getDato() != n) {
+            aux = aux.getSiguiente();
+        }
+        if (aux == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void eliminarelemento(TDato dato) {
+        if (!this.esVacia()) {
+            NodoLista aux = this.obtenerElemento(dato);
+            if (aux != null) {
+                if (aux == this.getPrimero()) {
+                    this.borrarInicio();
+                } else {
+                    if (aux == this.getUltimo()) {
+                        this.borrarUltimo();
+                    } else {
+                        aux.anterior.setSiguiente(aux.getSiguiente());
+                        aux.siguiente.setAnterior(aux.getAnterior());
+                        this.cantidad--;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void agregarOrdenado(NodoVuelo nuevoVuelo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mostrardelultimoalprimero() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mostrardelprimeroalultimo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mostrarRec() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

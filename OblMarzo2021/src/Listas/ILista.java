@@ -18,10 +18,14 @@ public interface ILista {
     boolean borrarInicio();
 
     //POS: Borra el último nodo
-    boolean borrarFin();
+    boolean borrarUltimo();
 
     //POS: Muestra los datos de la lista
     void mostrar();
+
+    public boolean buscarelemento(TDato n);
+
+    public NodoLista obtenerElemento(TDato n);
 
     //POS: Elimina todos los nodos de la lista
     void vaciar();
@@ -31,4 +35,14 @@ public interface ILista {
 
     //POS: Muestra un dato de la lista
     TDato mostrarDato(TDato n);
+
+    public void eliminarelemento(TDato dato);
+
+    public void agregarOrdenado(NodoVuelo nuevoVuelo);
+
+    public void mostrardelultimoalprimero();
+
+    public void mostrardelprimeroalultimo();
+
+    public void mostrarRec();
 }

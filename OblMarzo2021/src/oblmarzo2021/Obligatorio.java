@@ -1,4 +1,5 @@
 package oblmarzo2021;
+
 import Listas.NodoVuelo;
 import Dominio.*;
 import Listas.*;
@@ -48,6 +49,9 @@ public class Obligatorio implements IObligatorio {
         registrarCiudad(1, "FCO");//roma 1 stop
         registrarCiudad(1, "FLR");//florencia 2 stops, no debe aparecer en 2.16
 
+        //registrarVuelo(int numero, String aerolinea, String ciudadOrigen, String ciudadDestino, int estrellas, int capacidad, Calendar fechaHoraSalida, int duracion)
+        registrarVuelo();
+
         return ret;
     }
 
@@ -75,16 +79,48 @@ public class Obligatorio implements IObligatorio {
     }
 
     @Override
-    public Retorno eliminarCiudad(int NroCiudad, String Ciudad) {
-        Retorno ret = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
-        return ret;
+    public Retorno eliminarCiudad(int NroCiudad, String Ciudad) {
+        if (ciudades.esVacia()) {
+            return new Retorno(Retorno.Resultado.ERROR);
+        } else {
+            Ciudad nuevaCiudad = new Ciudad(NroCiudad, Ciudad);
+            TDato n = new TDato(nuevaCiudad);
+            if (!ciudades.existe(n)) {
+                // no existe la ciudad
+                return new Retorno(Retorno.Resultado.ERROR);
+            } else {
+                if (!lv.esVacia()) {
+                    //si lv incluye ciudad en destino u origen
+                    //boolean estaAsociada = aerolineas.buscarelemento(n); //lista vuelos capaz deberia ir en aerolinea no en Obligatorio
+                    boolean ciudadEncontrada = false;
+                    NodoVuelo auxvuelo = lv.getPrimero();
+
+                    while (!ciudadEncontrada || auxvuelo != null) {
+                        if (auxvuelo.getCiudadOrigen().equals(Ciudad) || auxvuelo.getCiudadDestino().equals(Ciudad)) {
+                            ciudadEncontrada = true;
+                        }
+                        auxvuelo = auxvuelo.getSiguiente();
+                    }
+
+                    if (!ciudadEncontrada) {
+                        ciudades.eliminarelemento(n);
+                        return new Retorno(Retorno.Resultado.OK);
+                    } else {
+                        return new Retorno(Retorno.Resultado.ERROR);
+                    }
+                }
+                ciudades.eliminarelemento(n);
+                return new Retorno(Retorno.Resultado.OK); //este return esta repetido pero por ahora ta.
+            }
+        }
     }
 
     @Override
     public Retorno registrarVuelo(int numero, String aerolinea, String ciudadOrigen, String ciudadDestino, int estrellas, int capacidad, Calendar fechaHoraSalida, int duracion) {
         Retorno ret = new Retorno(Retorno.Resultado.ERROR);
-        NodoVuelo vuelo = new NodoVuelo(numero,aerolinea,ciudadOrigen,ciudadDestino,estrellas,capacidad,fechaHoraSalida,duracion);
+
+        NodoVuelo vuelo = new NodoVuelo(numero, aerolinea, ciudadOrigen, ciudadDestino, estrellas, capacidad, fechaHoraSalida, duracion);
         if (estrellas < 1 || estrellas > 5) {
             return ret;
         }
@@ -95,15 +131,49 @@ public class Obligatorio implements IObligatorio {
 //          TODO
 //        }
 
-
-
         lv.agregarFinal(vuelo);
         ret.resultado = OK;
-
-
         return ret;
     }
 
+    /*
+    @Override
+    public Retorno registrarVuelo(int numero, String aerolinea,
+            String ciudadOrigen, String ciudadDestino,
+            int estrellas, int capacidad, Calendar fechaHoraSalida,
+            int duracion
+    ) {
+        Retorno ret = new Retorno(Retorno.Resultado.ERROR);
+
+        Aerolinea aeroAux = new Aerolinea(aerolinea);
+        // TDato n = new TDato(aeroAux);
+        //NodoLista aero = aerolineas.obtenerElemento(n);
+
+        Lista vuelosAerolinea = aeroAux.getVuelos();
+
+        Vuelo nuevoVuelo = new Vuelo(numero, aerolinea, ciudadOrigen, ciudadDestino, estrellas, capacidad, fechaHoraSalida, duracion);
+        TDato vueloDato = new TDato(nuevoVuelo);
+        NodoLista vuelo = new NodoLista(vueloDato);
+        if (vuelosAerolinea.buscarelemento(vueloDato)) {
+// esto no resuelve pq si le pasas mismo numero y distintas estrellas te lo agrega creo
+            return ret;
+        }
+        if (estrellas < 1 || estrellas > 5) {
+            return ret;
+        }
+        if (capacidad < 0 || duracion < 0) {
+            return ret;
+        }
+//        if (!ciudades.existe(ciudadOrigen)) {
+//          TODO
+//        }
+
+        vuelosAerolinea.agregarFinal(vueloDato);
+        aeroAux.setVuelos(vuelosAerolinea);
+        ret.resultado = OK;
+        return ret;
+    }
+     */
     @Override
     public Retorno ingresarServicio(String aerolinea, int numero, String servicio) {
         Retorno ret = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
@@ -194,5 +264,4 @@ public class Obligatorio implements IObligatorio {
 
         return ret;
     }
-
 }

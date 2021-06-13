@@ -1,7 +1,9 @@
 package Listas;
+
 import java.util.Calendar;
 
 public class NodoVuelo {
+
     int dato;
     String aerolinea;
     String ciudadOrigen;
@@ -17,14 +19,14 @@ public class NodoVuelo {
 
     public NodoVuelo(int dato, String aerolinea, String ciudadOrigen, String ciudadDestino, int estrellas, int cupo, Calendar fechaHoraSalida, int duracion) {
         this.dato = dato;
-        this.aerolinea=aerolinea;
+        this.aerolinea = aerolinea;
         this.ciudadOrigen = ciudadOrigen;
         this.ciudadDestino = ciudadDestino;
         this.estrellas = estrellas;
-        this.cupo=cupo;
+        this.cupo = cupo;
         this.fechaHoraSalida = fechaHoraSalida;
         this.duracion = duracion;
-        this.lp= new ListaPasajero(cupo);
+        this.lp = new ListaPasajero(cupo);
         //this.ce=new Cola(5);// defino cola de espera de 5 personas
         this.siguiente = null;
         this.anterior = null;
@@ -86,8 +88,22 @@ public class NodoVuelo {
     public void setCe(Cola ce) {
         this.ce = ce;
     }
-    */
-   
-    
-    
+     */
+    //// ESTOS SE VAN CUANDO ARREGLEMOS EL TEMA GENERICS
+    public String getCiudadOrigen() {
+        return ciudadOrigen;
+    }
+
+    public void setCiudadOrigen(String ciudadOrigen) {
+        this.ciudadOrigen = ciudadOrigen;
+    }
+
+    public String getCiudadDestino() {
+        return ciudadDestino;
+    }
+
+    public void setCiudadDestino(String ciudadDestino) {
+        this.ciudadDestino = ciudadDestino;
+    }
+
 }
